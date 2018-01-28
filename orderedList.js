@@ -3,6 +3,20 @@ var SIZE = 5;
 
 function create() {
     var list = [];
+    for (var i = 0; i < SIZE; i++) {
+        list[i] = Number.NaN;
+    }
+    return list;
+}
+function selectionSort(list) {
+    var jMin;
+    for (var i = 0; i < list.length; i++) {
+        var j = jMin = i;
+        for (++j; j < list.length; ++j) {
+            (list[j] < list[jMin]) && (jMin = j);
+        }
+        [list[i], list[jMin]] = [list[jMin], list[i]];
+    }
     return list;
 }
 function isEmpty(list) {
@@ -15,7 +29,7 @@ function isEmpty(list) {
 }
 function isFull(list) {
     var isFull = false;
-    if (isNaN(list[SIZE - 1])) {
+    if (list[SIZE - 1] === list.length) {
         return isFull = true;
     } else {
         return isFull;
@@ -24,45 +38,27 @@ function isFull(list) {
 }
 function size(list) {
     var counter = 0;
-    for (var i = 0; i < list.length; i++) {
-        if (isNan(list[i])) {
+    for (var i = 0; i < SIZE; i++) {
+        if (!isNaN(list[i])) {
             counter++;
         }
-        return counter;
     }
+    return counter;
 }
 function add(list, elem) {
-    var i = parseInt(elem);
     if (isFull(list)) {
         throw "Error, the list is full";
     } else if (!isNaN(elem)) {
-        throw "The element is not a number";
-    } else {
-        list[size(list)] = i;
-        sort(list);
+        list[size(list)] = elem;
     }
-    return size(list);
-}
-
-function addAt(list, elem, index) {
-    if (isFull(list) || (!isNaN(elem))) {
-        throw "Error, the list is full";
-    } else if(!isNaN(elem)){
-        throw "The element is not a number";
-    }else{
-        list[index] = elem;
-        sort(list);
-    }
+    selectionSort(list);
     return size(list);
 }
 function get(list, index) {
-    var elem;
-    for (var i = 0; i < list.length; i++) {
-        if (list[i] == index) {
-            elem = list[i];
-        }
+    if (index >= 0 && index < SIZE) {
+        var element = list[index];
+        return element;
     }
-    return elem;
 }
 function toString(list) {
     var str = "";
@@ -79,7 +75,7 @@ function indexOf(list, elem) {
     var index;
     var length = size(list);
     if (!isEmpty(list)) {
-        for (var i = 0; i < length; i++) {
+        for (var i = 0; i < list.length; i++) {
             if (list[i] === elem) {
                 index = i;
             }
@@ -89,27 +85,17 @@ function indexOf(list, elem) {
         return index = -1;
     }
 }
-function lastIndexOf(list, elem) {
-    var index;
-    var length = size(list);
-    if (!isEmpty(list)) {
-        for (var i = 0; i < length - 1; i++) {
-            if (list[i] === elem) {
-                index = i;
-            }
-        }
-        return index;
-    } else {
-        return index = -1;
-    }
-}
-function capacity(list) {
-    var capacity;
-    return capcity = list.length;
+function capacity() {
+    return SIZE;
 }
 function clear(list) {
     if (!isEmpty(list)) {
-        return list.length=0;
+        for (var i = 0; i < list.length; i++) {
+            if (!isNaN(list[i])) {
+                list[i] = Number.NaN;
+            }
+        }
+        return list;
     }
 }
 function firstElement(list) {
@@ -123,7 +109,7 @@ function firstElement(list) {
 function lastElement(list) {
     var last;
     if (!isEmpty(list)) {
-        return last = list[size(list) - 1];
+        return last = list[list.length - 1];
     } else {
         return console.log("Error, the list is empty");
     }
@@ -131,31 +117,79 @@ function lastElement(list) {
 function remove(list, index) {
     var elemRemove;
     if (!isEmpty(list)) {
-        for (var i = 0; i < size(list); i++) {
-            if (list[i] === index) {
-                elemRemove = list[i];
-                list[i]=null;
+        for (var i = 0; i < list.length; i++) {
+            if (!isNaN(list[index]) && list[i] == list[index]) {
+                elemRemove = list[index];
+                list[index] = Number.NaN;
             }
         }
         return elemRemove;
+    } else {
+        throw "the list is empty, you can not remove any item from the list";
     }
 }
-function removeElement(list, elem) {
-    var remove = false;
-    if (!isEmpty(list)) {
-        for (var i = 0; i < size(list); i++) {
-            if (list[index] === elem) {
-                list[i] = null;
-                return remove = true;
-            } else {
-                return remove;
-            }
-        }
+function removeElement(list, element) {
+    var remove;
+    var elem = list.indexOf(list, element);
+    if (isNaN(list[elem])) {
+        return remove = false;
+    } else {
+        list[elem] = Number.NaN;
+        return remove = true;
     }
 }
-function set(list, elem, index) {
-    var previousElem;
-    previousElem = list[index];
-    list[index] = index;
-    return previousElem;
+
+function testList() {
+    var list = create();
+    console.log("Longitud inicial: " + size(list));
+    console.log("Capacidad: " + capacity(list));
+    console.log("Esta vacia: " + isEmpty(list));
+    console.log("ESta llena: " + isFull(list));
+
+    console.log("--------------------------------------");
+
+    console.log("Añadiendo un elemento a la lista...");
+    add(list, 5);
+    console.log(list);
+
+    console.log("Añadiendo otro elemento a la lista...");
+    add(list, 1);
+    console.log(list);
+
+    console.log("Añadiendo otro elemento a la lista...");
+    add(list, 7);
+    console.log(list);
+
+    console.log("Añadiendo otro elemento a la lista...");
+    add(list, 6);
+    console.log(list);
+
+    console.log("Añadiendo otro elemento a la lista...");
+    add(list, 3);
+    console.log(list);
+
+    console.log("Obteniendo elemento indicando el indice: " + get(list, 3));
+
+    console.log("--------------------------------------");
+
+    console.log("El elemento 5 esta en la posicion " + indexOf(list, 5));
+
+    console.log("--------------------------------------");
+
+    console.log("Convertido a String: " + toString(list));
+    console.log("Primer Elemento: " + firstElement(list));
+    console.log("Ultimo Elemento: " + lastElement(list));
+    console.log("Longitud final: " + size(list));
+
+    console.log("--------------------------------------");
+
+    console.log("Eliminar elemento indicando indice " + remove(list, 3));
+    console.log(list);
+    console.log("Eliminar elemento " + removeElement(list, 4));
+    console.log(list);
+
+    console.log("--------------------------------------");
+
+    console.log("Limpiando lista " + clear(list));
 }
+window.onload = testList;

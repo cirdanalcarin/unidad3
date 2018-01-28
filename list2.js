@@ -6,22 +6,26 @@ function create() {
     return list;
 }
 function isEmpty(list) {
-    return (list.length === 0);
-}
-function isFull(list) {
-    return (list.length === SIZE);
-}
-function size(list) {
-    var counter = 0;
-    for (var i = 0; i < list.length; i++) {
-        if (!isFull(list[i])) {
-            counter++;
-        }
-        return counter;
+    var empty = false;
+    if (list.length === 0) {
+        return empty = true;
+    } else {
+        return empty;
     }
 }
+function isFull(list) {
+    var isFull = false;
+    if (list.length === SIZE) {
+        return isFull = true;
+    } else {
+        return isFull;
+    }
+}
+function size(list) {
+    return list.length;
+}
 function add(list, elem) {
-    if (!isFull(list)) {
+    if (!isFull(list) && !isNaN(elem)) {
         list.push(elem);
         return size(list);
     } else {
@@ -30,7 +34,7 @@ function add(list, elem) {
 
 }
 function addAt(list, elem, index) {
-    if (!isFull(list)) {
+    if (!isFull(list) && !isNaN(elem) && (index >= 0 && index < SIZE)) {
         list.splice(index, 0, elem);
         return size(list);
     } else {
@@ -38,33 +42,43 @@ function addAt(list, elem, index) {
     }
 }
 function get(list, index) {
-    var element = list.slice(list[index]);
-    return element;
+    if (index >= 0 && index < SIZE) {
+        var element = list[index];
+        return element;
+    }
 }
 function toString(list) {
     return list.join("-");
 }
 function indexOf(list, element) {
-    var element = list.indexOf(element);
-    return element;
+    var elem = list.indexOf(element);
+    return elem;
 }
-function lastIndexOf(list, index) {
-    var element = list.lastIndexOf(element);
-    return element;
+function lastIndexOf(list, element) {
+    var elem = list.lastIndexOf(element);
+    return elem;
 }
 function capacity(list) {
-    var capacity = list.length;
-    return capacity;
+    return SIZE;
 }
 function clear(list) {
     return list.length = 0;
 }
 function firstElement(list) {
-    return list[0];
+    var first;
+    if (!isEmpty(list)) {
+        return first = list[0];
+    } else {
+        return console.log("Error, the list is empty");
+    }
 }
 function lastElement(list) {
-    var last = list.length - 1;
-    return last;
+    var last;
+    if (!isEmpty(list)) {
+        return last = list[list.length - 1];
+    } else {
+        return console.log("Error, the list is empty");
+    }
 }
 function remove(list, index) {
     if (!isEmpty(list)) {
@@ -77,8 +91,8 @@ function remove(list, index) {
 }
 function removeElement(list, element) {
     var elem = list.indexOf(element);
-    var rmv = remove(list, elem);
-    if (!isEmpty(list.find(list[element]) === rmv)) {
+    if (!isEmpty(list) && elem !== -1) {
+        list.splice(elem, 1);
         return true;
     } else {
         return false;
@@ -86,21 +100,67 @@ function removeElement(list, element) {
 }
 function set(list, element, index) {
     var elem = list[index];
-    list.splice(index, 1, elemnt);
+    list.splice(index, 1, element);
     return elem;
 }
-var alist = create();
-var element = document.getElementById("element").value;
-var index = document.getElementById("index").value;
 
-document.getElementById("add").onClick = add(alist, element);
-/*document.getElementById("addAt").onClick = addAt(alist, element, index);
-document.getElementById("get").onClick = get(alist, index);
-document.getElementById("toString").onClick = toString(alist);
-document.getElementById("indexOf").onClick = indexOf(alist, element);
-document.getElementById("lastIndexOf").onClick = lastIndexOf(alist, element);
-document.getElementById("clear").onClick = clear(alist);
-document.getElementById("firstElement").onClick = firstElement(alist);
-document.getElementById("lastElement").onClick = lastElement(alist);
-document.getElementById("removeElement").onClick = removeElement(alist, element);
-document.getElementById("set").onClick = set(alist, element, index);*/
+function testList() {
+    var list = create();
+    console.log("Longitud inicial: " + size(list));
+    console.log("Capacidad: " + capacity(list));
+    console.log("Esta vacia: " + isEmpty(list));
+    console.log("ESta llena: " + isFull(list));
+
+    console.log("--------------------------------------");
+
+    console.log("Añadiendo un elemento a la lista...");
+    add(list, 2);
+    console.log(list);
+
+    console.log("Añadiendo otro elemento a la lista...");
+    add(list, 3);
+    console.log(list);
+
+    console.log("Añadiendo un elemento a la lista en una posición indicada...");
+    addAt(list, 4, 0);
+    console.log(list);
+
+    console.log("--------------------------------------");
+
+    console.log("Obteniendo elemento indicando el indice: " + get(list, 1));
+
+    console.log("Convertido a String: " + toString(list));
+
+    console.log("--------------------------------------");
+
+    console.log(list);
+    console.log("El elemento 4 esta en la posicion " + indexOf(list, 4));
+    console.log("El elemento 3 esta en la posicion " + lastIndexOf(list, 3));
+
+    console.log("--------------------------------------");
+
+    console.log("Primer Elemento: " + firstElement(list));
+    console.log("Ultimo Elemento: " + lastElement(list));
+
+    console.log("--------------------------------------");
+
+    console.log(list);
+    console.log("Reemplazar elemento " + set(list, 4, 1));
+    console.log(list);
+    console.log("Longitud final: " + size(list));
+
+    console.log("--------------------------------------");
+
+    console.log(list);
+    console.log("Eliminar elemento indicando indice " + remove(list, 0));
+    console.log(list);
+    console.log("Eliminar elemento " + removeElement(list, 4));
+    console.log(list);
+
+    console.log("--------------------------------------");
+
+    console.log("Limpiando lista. Longitud: " + clear(list));
+    console.log(list);
+
+}
+window.onload = testList;
