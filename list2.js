@@ -25,20 +25,27 @@ function size(list) {
     return list.length;
 }
 function add(list, elem) {
-    if (!isFull(list) && !isNaN(elem)) {
-        list.push(elem);
-        return size(list);
-    } else {
-        throw "The list is full, you can not add any item to the list";
+    try {
+        if (!isFull(list) && !isNaN(elem)) {
+            list.push(elem);
+            return size(list);
+        } else {
+            throw "The list is full, you can not add any item to the list";
+        }
+    } catch (error) {
+        console.log(error);
     }
-
 }
 function addAt(list, elem, index) {
-    if (!isFull(list) && !isNaN(elem) && (index >= 0 && index < SIZE)) {
-        list.splice(index, 0, elem);
-        return size(list);
-    } else {
-        throw "The list is full, you can not add any item to the list";
+    try {
+        if (!isFull(list) && !isNaN(elem) && (index >= 0 && index < SIZE)) {
+            list.splice(index, 0, elem);
+            return size(list);
+        } else {
+            throw "The list is full, you can not add any item to the list";
+        }
+    } catch (error) {
+        console.log(error);
     }
 }
 function get(list, index) {
@@ -65,29 +72,40 @@ function clear(list) {
     return list.length = 0;
 }
 function firstElement(list) {
-    var first;
-    if (!isEmpty(list)) {
-        return first = list[0];
-    } else {
-        return console.log("Error, the list is empty");
+    try {
+        var first;
+        if (!isEmpty(list)) {
+            return first = list[0];
+        } else {
+            throw "Error, the list is empty";
+        }
+    } catch (error) {
+        console.log(error);
     }
 }
 function lastElement(list) {
-    var last;
-    if (!isEmpty(list)) {
-        return last = list[list.length - 1];
-    } else {
-        return console.log("Error, the list is empty");
+    try {
+        var last;
+        if (!isEmpty(list)) {
+            return last = list[list.length - 1];
+        } else {
+            throw "Error, the list is empty";
+        }
+    } catch (error) {
+        console.log(error);
     }
 }
 function remove(list, index) {
-    if (!isEmpty(list)) {
-        var element = list.splice(index, 1);
-        return element;
-    } else {
-        throw "The list is empty, you can not remove any item from the list";
+    try {
+        if (!isEmpty(list)) {
+            var element = list.splice(index, 1);
+            return element;
+        } else {
+            throw "The list is empty, you can not remove any item from the list";
+        }
+    } catch (error) {
+        conosle.log(error);
     }
-
 }
 function removeElement(list, element) {
     var elem = list.indexOf(element);

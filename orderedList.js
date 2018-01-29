@@ -46,13 +46,17 @@ function size(list) {
     return counter;
 }
 function add(list, elem) {
-    if (isFull(list)) {
-        throw "Error, the list is full";
-    } else if (!isNaN(elem)) {
-        list[size(list)] = elem;
+    try {
+        if (isFull(list)) {
+            throw "Error, the list is full";
+        } else if (!isNaN(elem)) {
+            list[size(list)] = elem;
+        }
+        selectionSort(list);
+        return size(list);
+    } catch (error) {
+        console.log(error);
     }
-    selectionSort(list);
-    return size(list);
 }
 function get(list, index) {
     if (index >= 0 && index < SIZE) {
@@ -99,33 +103,45 @@ function clear(list) {
     }
 }
 function firstElement(list) {
-    var first;
-    if (!isEmpty(list)) {
-        return first = list[0];
-    } else {
-        return console.log("Error, the list is empty");
+    try {
+        var first;
+        if (!isEmpty(list)) {
+            return first = list[0];
+        } else {
+            throw "Error, the list is empty";
+        }
+    } catch (error) {
+        console.log(error);
     }
 }
 function lastElement(list) {
-    var last;
-    if (!isEmpty(list)) {
-        return last = list[list.length - 1];
-    } else {
-        return console.log("Error, the list is empty");
+    try {
+        var last;
+        if (!isEmpty(list)) {
+            return last = list[list.length - 1];
+        } else {
+            throw "Error, the list is empty";
+        }
+    } catch (error) {
+        console.log(error);
     }
 }
 function remove(list, index) {
-    var elemRemove;
-    if (!isEmpty(list)) {
-        for (var i = 0; i < list.length; i++) {
-            if (!isNaN(list[index]) && list[i] == list[index]) {
-                elemRemove = list[index];
-                list[index] = Number.NaN;
+    try {
+        var elemRemove;
+        if (!isEmpty(list)) {
+            for (var i = 0; i < list.length; i++) {
+                if (!isNaN(list[index]) && list[i] == list[index]) {
+                    elemRemove = list[index];
+                    list[index] = Number.NaN;
+                }
             }
+            return elemRemove;
+        } else {
+            throw "the list is empty, you can not remove any item from the list";
         }
-        return elemRemove;
-    } else {
-        throw "the list is empty, you can not remove any item from the list";
+    } catch (error) {
+        console.log(error);
     }
 }
 function removeElement(list, element) {
