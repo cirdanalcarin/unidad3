@@ -130,12 +130,12 @@ function remove(list, index) {
 }
 function removeElement(list, element) {
     var remove;
-    var elem = list.indexOf(list, element);
-    if (isNaN(list[elem])) {
-        return remove = false;
-    } else {
+    var elem = indexOf(list, element);
+    if (!isNaN(list[elem])) {
         list[elem] = Number.NaN;
         return remove = true;
+    } else {
+        return remove = false;
     }
 }
 
@@ -185,7 +185,7 @@ function testList() {
 
     console.log("Eliminar elemento indicando indice " + remove(list, 3));
     console.log(list);
-    console.log("Eliminar elemento " + removeElement(list, 4));
+    console.log("Eliminar elemento " + removeElement(list, 5));
     console.log(list);
 
     console.log("--------------------------------------");

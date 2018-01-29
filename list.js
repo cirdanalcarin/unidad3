@@ -138,12 +138,12 @@ function remove(list, index) {
 }
 function removeElement(list, element) {
     var remove;
-    var elem = list.indexOf(list, element);
-    if (isNaN(list[elem])) {
-        return remove = false;
-    } else {
+    var elem = indexOf(list, element);
+    if (!isNaN(list[elem])) {
         list[elem] = Number.NaN;
         return remove = true;
+    } else {
+        return remove = false;
     }
 }
 function set(list, elem, index) {
